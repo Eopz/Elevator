@@ -1,3 +1,6 @@
+To compile, just do a javac with all the files in the folder, while javac all of them at the same time.
+ie. "javac Elevator.java ElevatorCluster.java Direction.java ElevatorTest.java"
+
 Elevator.java:
 It is the representation of an elevator. The elevator itself doesn't have any of the
 algorithmic code in it. All it is, is a class that lets me make more elevators. A building
