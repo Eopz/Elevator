@@ -1,10 +1,9 @@
 public class Elevator{
 	
-	private Thread t;
 	private int elevatorId;
 	private int floor;
 	private boolean[] goalFloors;
-	private Direction d;//0 is not moving, -1 is down, 1 is up
+	private Direction d;
 	
 	public Elevator(int id, int currFloor, int floors){
 		elevatorId = id;

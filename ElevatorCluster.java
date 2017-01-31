@@ -18,21 +18,22 @@ public class ElevatorCluster{
 	public void requestElevator(int floor){
 		
 		Elevator closest = cluster.get(0);
+		Direction newDirection = closest.getDirection();
 		
 		for(int i = 0; i < cluster.size(); i++){
 		
-			if(Math.abs(cluster.get(i).getFloor() - floor) <= closest.getFloor()){
-			
+			if(Math.abs(cluster.get(i).getFloor() - floor) <= Math.abs(closest.getFloor() - floor)){
+				
 				if(floor < cluster.get(i).getFloor()){
 					if(cluster.get(i).getDirection() == Direction.DOWN || cluster.get(i).getDirection() == Direction.NOT_MOVING){
 						closest = cluster.get(i);
-						closest.setDirection(Direction.DOWN);
+						newDirection = Direction.DOWN;
 					}
 				}
 				else if(floor > cluster.get(i).getFloor()){
 					if(cluster.get(i).getDirection() == Direction.UP || cluster.get(i).getDirection() == Direction.NOT_MOVING){
 						closest = cluster.get(i);
-						closest.setDirection(Direction.UP);
+						newDirection = Direction.UP;
 					}
 				}
 				
@@ -40,20 +41,30 @@ public class ElevatorCluster{
 			
 		}
 		
+		closest.setDirection(newDirection);
+		
 		closest.setGoalFloor(floor);
-		System.out.println(closest.getDirection());
 		System.out.println(floor + " has been requested");
 	}
 	
 	public void step(){
 		
 		for(int i = 0; i < cluster.size(); i++){
+		
+			int floor = cluster.get(i).getFloor();
+			
+			if(cluster.get(i).checkGoalFloor(floor)){
+				cluster.get(i).removeGoalFloor(floor);
+			}
+			
+			if(cluster.get(i).getGoalFloors() == ""){
+				cluster.get(i).setDirection(Direction.NOT_MOVING);
+			}
 			
 			System.out.println(cluster.get(i).getDirection());
 			switch(cluster.get(i).getDirection()){
 				
 				case UP:
-					System.out.println("HI");
 					cluster.get(i).upFloor();
 					break;
 				case DOWN:
@@ -65,15 +76,6 @@ public class ElevatorCluster{
 					break;
 			}
 			
-			int floor = cluster.get(i).getFloor();
-			
-			if(cluster.get(i).checkGoalFloor(floor)){
-				cluster.get(i).removeGoalFloor(floor);
-			}
-			
-			if(cluster.get(i).getGoalFloors() == ""){
-				cluster.get(i).setDirection(Direction.NOT_MOVING);
-			}
 			
 		}
 	}

@@ -11,16 +11,19 @@ public class ElevatorTest{
 			myElevators.addElevator();
 		}
 		
-		for(int i = 0; i < 5; i++){
+/* 		for(int i = 0; i < 5; i++){
 			myElevators.requestElevator(r.nextInt(5) + 1);
-		}
+		} */
 		
-		for(int i = 0; i < 50; i++){
+		for(int i = 0; i < 25; i++){
 			
-			myElevators.step();
 			myElevators.printElevators();
+			myElevators.step();
 			
-			Thread.sleep(2000);
+			if(i % 5 == 0)
+				myElevators.requestElevator(r.nextInt(5) + 1);
+			
+			Thread.sleep(5000);
 		}
 		
 	}
